@@ -1,23 +1,19 @@
 ﻿<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12"> <!--Remember!!!! "vm" references to "controllerAs in app.js   ALWAYS USE VM-->
             <h3>
                 Have a Review?
             </h3>
-            <form role="form">
+            <form role="form" ng-submit="vm.add()">
                 <div class="form-group">
-
-                    <label>
-                        Comment:
-                    </label>
-                    <input name="comment" type="text" class="form-control" />
+                    <input ng-model="vm.comment" name="comment" type="text" class="form-control" placeholder="Comment"/>
                 </div>
                 <div class="form-group">
 
                     <label>
-                        Rating
+                        Rating:
                     </label>
-                    <select name="rating" class="form-control">
+                    <select ng-model="vm.rating" name="rating" class="form-control">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -25,16 +21,31 @@
                         <option>5</option>
                     </select>
                 </div>
-                <button name="submitBtn" type="submit" class="btn btn-default">
-                    Submit
-                </button>
+                <input type="submit" value="Add" />
             </form>
             <h3>
                 Reviews
             </h3>
             <div class="list-group" ng-model="vm">
                 <ul>
-                    <li ng-repeat="item in vm.items">{{item.Comment}}  {{item.Rating}}</li>
+                    <li ng-repeat="item in vm.items">
+                        <div ng-if="vm.updateItem !== item">
+                            {{item.Id}} {{item.Comment}}  {{item.Rating}}
+                            <a href="#/" ng-click="vm.updateItem = item">Update</a>
+                            <a href="#/" ng-click="vm.remove(item)">Delete</a> 
+                        </div>
+                        <div ng-if="vm.updateItem === item">
+                            <input ng-model="vm.updateItem.Comment" />
+                            <select ng-model="vm.updateItem.Rating" name="rating" class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <a href="#/" ng-click="vm.update(item)">Save</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
